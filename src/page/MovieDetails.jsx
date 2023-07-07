@@ -10,11 +10,9 @@ function MovieDetails() {
     const { movieId } = useParams();
 
     const location = useLocation();
-
 	const loc = useRef(location.state?.from ?? '/movies');
 	
 	// console.log(loc)
-
     // console.log(location);
 
     useEffect(() => {
