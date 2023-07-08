@@ -4,14 +4,14 @@ import SearchMovies from 'components/SearchMovies/SearchMovies';
 import { fetchMoviesByQuery } from 'helpers/fetchApi';
 import { useLocation, useSearchParams } from 'react-router-dom';
 
-import MoviesListTrending from 'components/MoviesListTrending/MoviesListTrending';
+import MoviesList from 'components/MoviesList/MoviesList';
 
 function Movies() {
     const [movies, setMovies] = useState([]);
     const [searchParams, setSearchParams] = useSearchParams();
 
-    const location = useLocation();
-    console.log(location);
+    // const location = useLocation();
+    // console.log(location);
 
     const name = searchParams.get('name');
     // console.log(name);
@@ -43,7 +43,7 @@ function Movies() {
                 <button type="submit">Search</button>
             </form>
 
-            {movies && <MoviesListTrending movies={movies} />}
+            {movies && <MoviesList movies={movies} />}
         </div>
     );
 }

@@ -4,15 +4,18 @@ import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
 import { fetchMoviesById } from '../helpers/fetchApi';
 import { useState } from 'react';
 import { useRef } from 'react';
+import { Suspense } from 'react';
+
+import loadingPhoto from '../images/loadingPhoto.jpg';
 
 function MovieDetails() {
     const [detailsMovie, setDetailsMovie] = useState({});
     const { movieId } = useParams();
 
     const location = useLocation();
-	const loc = useRef(location.state?.from ?? '/movies');
-	
-	// console.log(loc)
+    const loc = useRef(location.state?.from ?? '/movies');
+
+    // console.log(loc)
     // console.log(location);
 
     useEffect(() => {
@@ -35,12 +38,17 @@ function MovieDetails() {
             <Link to={loc.current}>Go back</Link> <br />
             <img
                 src={
-                    'https://image.tmdb.org/t/p/w300' + detailsMovie.poster_path
+                    detailsMovie.poster_path
+                        ? 'https://image.tmdb.org/t/p/w300' +
+                          detailsMovie.poster_path
+                        : loadingPhoto
                 }
+                width="250"
+                height="400"
                 alt=""
             />
             <h2>{detailsMovie.original_title}</h2>
-            <p>User Score {detailsMovie.vote_average * 10}%</p>
+            <p>User Score {Math.round(detailsMovie.vote_average * 10)}%</p>
             <h3>Overview</h3>
             <p>{detailsMovie.overview}</p>
             <h4>Genres</h4>
@@ -60,7 +68,9 @@ function MovieDetails() {
                     </li>
                 </ul>
             </div>
-            <Outlet />
+            <Suspense fallback={<div>Loading...</div>}>
+                <Outlet />
+            </Suspense>
         </div>
     );
 }

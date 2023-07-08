@@ -1,7 +1,7 @@
 import { fetchTrendingMovies } from 'helpers/fetchApi';
 import { useState, useEffect } from 'react';
 
-import MoviesListTrending from 'components/MoviesListTrending/MoviesListTrending';
+import MoviesList from 'components/MoviesList/MoviesList';
 
 const Home = () => {
     const [movies, setMovies] = useState([]);
@@ -9,7 +9,7 @@ const Home = () => {
     useEffect(() => {
         async function api() {
             const data = await fetchTrendingMovies();
-            // console.log(data);
+            console.log(data);
             setMovies(data.results);
         }
         api();
@@ -18,7 +18,7 @@ const Home = () => {
     return (
         <div>
             <h1>Trending today</h1>
-            <MoviesListTrending movies={movies} />
+            <MoviesList movies={movies} />
         </div>
     );
 };

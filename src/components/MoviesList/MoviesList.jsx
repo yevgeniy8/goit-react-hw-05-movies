@@ -1,29 +1,31 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-function MoviesListTrending({ movies }) {
+import { Ul, StyledLink, Li } from './MoviesList.styles';
+
+function MoviesList({ movies }) {
     const location = useLocation();
-    console.log(location);
+    // console.log(location);
     return (
         <div>
-            <ul>
+            <Ul>
                 {movies.map(item => {
                     return (
                         item.title && (
-                            <li key={item.id}>
-                                <Link
+                            <Li key={item.id}>
+                                <StyledLink
                                     to={`/movies/${item.id}`}
                                     state={{ from: location }}
                                 >
                                     {item.title}
-                                </Link>
-                            </li>
+                                </StyledLink>
+                            </Li>
                         )
                     );
                 })}
-            </ul>
+            </Ul>
         </div>
     );
 }
 
-export default MoviesListTrending;
+export default MoviesList;
