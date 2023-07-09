@@ -1,45 +1,48 @@
-import React from 'react';
 import { useParams } from 'react-router-dom';
 
+import photo from '../../images/photo.jpg';
+
 import { fetchCastMovie } from 'helpers/fetchApi';
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+
+import { Ul, Li } from './Cast.styled';
 
 function Cast() {
     const [castMovie, setCastMovie] = useState([]);
     const { movieId } = useParams();
-    // console.log(movieId);
 
     useEffect(() => {
         const api = async () => {
             const result = await fetchCastMovie(movieId);
-            // console.log(result);
             setCastMovie(result.cast);
         };
 
         api();
-
-        // console.log(castMovie);
     }, [movieId]);
 
     return (
         <div>
-            <ul>
+            <Ul>
                 {castMovie.map(item => (
-                    <li key={item.id}>
+                    <Li key={item.id}>
                         <img
                             src={
-                                'https://image.tmdb.org/t/p/w300' +
                                 item.profile_path
+                                    ? 'https://image.tmdb.org/t/p/w300' +
+                                      item.profile_path
+                                    : photo
                             }
                             alt=""
                             width="80"
                             height="120"
                         />
-                        <p>{item.name}</p>
-                    </li>
+                        <div>
+                            <p>{item.name}</p>
+                            <p>{item.character}</p>
+                        </div>
+                    </Li>
                 ))}
-            </ul>
+            </Ul>
         </div>
     );
 }

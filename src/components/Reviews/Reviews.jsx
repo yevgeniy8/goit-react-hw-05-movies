@@ -1,18 +1,15 @@
-import React, { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { fetchReviewsMovie } from 'helpers/fetchApi';
 import { useParams } from 'react-router-dom';
-import { useState } from 'react';
 
 function Reviews() {
     const [reviewsMovie, setReviewsMovie] = useState([]);
     const { movieId } = useParams();
-    // console.log(movieId);
 
     useEffect(() => {
         const api = async () => {
             const result = await fetchReviewsMovie(movieId);
-            // console.log(result);
             setReviewsMovie(result.results);
         };
 
@@ -22,12 +19,16 @@ function Reviews() {
     return (
         <div>
             <ul>
-                {reviewsMovie.map(item => (
-                    <li key={item.id}>
-                        <h2>{item.author}</h2>
-                        <p>{item.content}</p>
-                    </li>
-                ))}
+                {reviewsMovie.length ? (
+                    reviewsMovie.map(item => (
+                        <li key={item.id}>
+                            <h2>{item.author}</h2>
+                            <p>{item.content}</p>
+                        </li>
+                    ))
+                ) : (
+                    <div>Wie don't have any reviews for this movie</div>
+                )}
             </ul>
         </div>
     );

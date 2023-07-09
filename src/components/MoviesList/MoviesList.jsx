@@ -1,11 +1,10 @@
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import { Ul, StyledLink, Li } from './MoviesList.styles';
 
 function MoviesList({ movies }) {
     const location = useLocation();
-    // console.log(location);
     return (
         <div>
             <Ul>
@@ -27,5 +26,14 @@ function MoviesList({ movies }) {
         </div>
     );
 }
+
+MoviesList.propTypes = {
+    movies: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.number.isRequired,
+            title: PropTypes.string.isRequired,
+        })
+    ),
+};
 
 export default MoviesList;

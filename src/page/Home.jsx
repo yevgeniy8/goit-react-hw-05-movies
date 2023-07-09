@@ -9,7 +9,6 @@ const Home = () => {
     useEffect(() => {
         async function api() {
             const data = await fetchTrendingMovies();
-            console.log(data);
             setMovies(data.results);
         }
         api();
